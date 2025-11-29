@@ -27,18 +27,25 @@ mesh.position.set(0.7, -0.6, 1);
 
 scene.add(mesh);
 console.log("logging mesh", mesh.position.length()); // gives the position of the mesh from the center
-// Camera
-
 // Axis helper
 const axesHelper = new THREE.AxesHelper();
+
+// Scale
+// mesh.scale.x = 2;
+// mesh.scale.y = 2;
+// mesh.scale.z = 2;
+mesh.scale.set(0.5, 1, 1);
+// Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 console.log("Distance to camera", mesh.position.distanceTo(camera.position));
+camera.position.x = 2;
+camera.position.z = 4;
+camera.position.y = 0;
 // camera.position.x = 1;
-camera.position.z = 2;
-camera.position.y = 1;
-camera.position.x = 1;
 scene.add(camera);
 scene.add(axesHelper);
+// camera.lookAt(new THREE.Vector3(3, 0, 0));
+camera.lookAt(mesh.position);
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ canvas });
