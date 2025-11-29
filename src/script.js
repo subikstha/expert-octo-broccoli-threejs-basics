@@ -12,21 +12,35 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 // Object
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({
-  color: 0xff0000,
-  wireframe: false,
-});
-const mesh = new THREE.Mesh(geometry, material);
-// Position of the mesh can be changed right before adding the mesh to the scene
-// mesh.position.y = -0.6;
-// mesh.position.z = 1;
-// mesh.position.x = 0.7;
-// Setting all x,y and z at once
-mesh.position.set(0.7, -0.6, 1);
+const group = new THREE.Group();
+scene.add(group);
 
-scene.add(mesh);
-console.log("logging mesh", mesh.position.length()); // gives the position of the mesh from the center
+const cube1 = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+);
+
+group.add(cube1);
+const cube2 = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+);
+
+group.add(cube2);
+cube2.position.x = 2;
+
+const cube3 = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: 0x0000ff })
+);
+
+group.add(cube3);
+cube3.position.x = -2;
+
+group.position.y = 2;
+group.rotation.y = Math.PI / 4;
+
+//console.log("logging mesh", mesh.position.length()); // gives the position of the mesh from the center
 // Axis helper
 const axesHelper = new THREE.AxesHelper();
 
@@ -34,18 +48,18 @@ const axesHelper = new THREE.AxesHelper();
 // mesh.scale.x = 2;
 // mesh.scale.y = 2;
 // mesh.scale.z = 2;
-mesh.scale.set(0.5, 1, 1);
+// mesh.scale.set(0.5, 1, 1);
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-console.log("Distance to camera", mesh.position.distanceTo(camera.position));
-camera.position.x = 2;
+// console.log("Distance to camera", mesh.position.distanceTo(camera.position));
+// camera.position.x = 2;
 camera.position.z = 4;
 camera.position.y = 0;
 // camera.position.x = 1;
 scene.add(camera);
 scene.add(axesHelper);
 // camera.lookAt(new THREE.Vector3(3, 0, 0));
-camera.lookAt(mesh.position);
+camera.lookAt(group.position);
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({ canvas });
